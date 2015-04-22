@@ -12,7 +12,7 @@ module.exports = function (req, res) {
     .then(function (records) {
       if (!records[0]) return res.notFound();
 
-      return res.ok(records[0]);
+      return res.noContent();
     })
     .catch(res.serverError);
 };
