@@ -1,16 +1,19 @@
+
 /**
  * Passport configuration file where you should configure all your strategies
  * @description :: Configuration file where you configure your passport authentication
  */
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var JwtStrategy = require('passport-jwt').Strategy;
 var FacebookTokenStrategy = require('passport-facebook-token').Strategy;
-var pwdService = require('../api/services/cipherService');
 
+var EXPIRES_IN_MINUTES = 60 * 24;
+var SECRET = process.env.tokenSecret || "4ukI0uIVnB3iI1yxj646fVXSE3ZVk4doZgz6fTbNg7jO41EAtl20J5F7Trtwe7OM";
+var ALGORITHM = "HS256";
+var ISSUER = "nozus.com";
+var AUDIENCE = "nozus.com";
 
-// TODO: make this more stable and properly parse profile data
 
 /**
  * Configuration object for local strategy
@@ -29,8 +32,9 @@ var LOCAL_STRATEGY_CONFIG = {
  * @private
  */
 var JWT_STRATEGY_CONFIG = {
-    secretOrKey: pwdService.secret,
-    issuer : pwdService.issuer,
+    secretOrKey: SECRET,
+    issuer : ISSUER,
+    audience: AUDIENCE,
     passReqToCallback: false
 };
 
@@ -65,7 +69,7 @@ function _onLocalStrategyAuth(email, password, next) {
             });
 
             // TODO: replace with new cipher service type
-            if (!pwdService.comparePassword(password, user))
+            if (!CipherService.comparePassword(password, user))
                 return next(null, false, {
                 code: 'E_WRONG_PASSWORD',
                 message: 'Password is wrong'
@@ -134,3 +138,11 @@ function _onSocialStrategyAuth(req, accessToken, refreshToken, profile, next) {
 passport.use(new LocalStrategy(LOCAL_STRATEGY_CONFIG, _onLocalStrategyAuth));
 passport.use(new JwtStrategy(JWT_STRATEGY_CONFIG, _onJwtStrategyAuth));
 passport.use(new FacebookTokenStrategy(SOCIAL_STRATEGY_CONFIG, _onSocialStrategyAuth));
+
+module.exports.jwtSettings = {
+    expiresInMinutes: EXPIRES_IN_MINUTES,
+    secret: SECRET,
+    algorithm : ALGORITHM,
+    issuer : ISSUER,
+    audience : AUDIENCE
+};

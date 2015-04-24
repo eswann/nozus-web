@@ -1,4 +1,3 @@
-var cipherService = require("../services/cipherService");
 /**
  * User
  * @description :: Model for storing users
@@ -58,12 +57,12 @@ module.exports = {
     },
 
     beforeUpdate: function (values, next) {
-        cipherService.hashPassword(values);
+        CipherService.hashPassword(values);
         next();
     },
 
     beforeCreate: function (values, next) {
-        cipherService.hashPassword(values);
+        CipherService.hashPassword(values);
         next();
     }
 };

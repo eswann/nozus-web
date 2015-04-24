@@ -30,6 +30,8 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
+    session: null,
+
      order: [
        'startRequestTimer',
        'bodyParser',

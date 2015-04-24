@@ -11,11 +11,10 @@
 
 module.exports.policies = {
 
-    '*': ['hasToken', 'isAuthenticated'],
+    '*': ['isAuthenticated'],
 
     AuthController: {
         '*': true
-
     },
 
     PingController: {

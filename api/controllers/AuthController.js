@@ -2,9 +2,7 @@
  * AuthController
  * @description :: Server-side logic for manage user's authorization
  */
-
 var passport = require('passport');
-var cipherService = require('../services/cipherService');
 
 /**
  * Triggers when user authenticates via passport
@@ -21,21 +19,12 @@ function _onPassportAuth(req, res, error, user, info) {
 
     return res.ok({
         // TODO: replace with new type of cipher service
-        token: cipherService.createToken(user),
+        token: CipherService.createToken(user),
         user: user
     });
 }
 
 module.exports = {
-    /**
-     * Sign in by local strategy in passport
-     * @param {Object} req Request object
-     * @param {Object} res Response object
-     */
-    signin: function (req, res) {
-        passport.authenticate('local', _onPassportAuth.bind(this, req, res))(req, res);
-    },
-
     /**
      * Sign up in system
      * @param {Object} req Request object
@@ -47,12 +36,21 @@ module.exports = {
             .then(function (user) {
                 return {
                     // TODO: replace with new type of cipher service
-                    token: cipherService.createToken(user),
+                    token: CipherService.createToken(user),
                     user: user
                 };
             })
             .then(res.created)
             .catch(res.serverError);
+    },
+
+    /**
+     * Sign in by local strategy in passport
+     * @param {Object} req Request object
+     * @param {Object} res Response object
+     */
+    signin: function (req, res) {
+        passport.authenticate('local', _onPassportAuth.bind(this, req, res))(req, res);
     },
 
     /**
