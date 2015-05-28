@@ -1,3 +1,4 @@
-# Nozus.Web.Api
+# nozus-web
 
-a [Sails](http://sailsjs.org) application
+A [Sails](http://sailsjs.org) application to demonstrate basic Sails functionality
+with an Aurelia front end.

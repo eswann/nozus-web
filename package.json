@@ -1,8 +1,8 @@
 {
-  "name": "Nozus.Web.Api",
+  "name": "nozus-web",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "A Sails application",
   "keywords": [],
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -29,7 +29,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/Nozus.Web.Api.git"
+    "url": "https://github.com/eswann/nozus-web.git"
   },
   "author": "anonymous node/sails user",
   "license": ""
